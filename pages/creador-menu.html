@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="../style.css">
+    <title>Mi menu</title>
+</head>
+
+<body>
+
+    <header class="container-fluid vw-100">
+        <div class="row">
+            <div class="col-4 centrado">
+                <img src="../assets/reda1-e1451992128157.png" class="img-bob" alt="">
+            </div>
+            
+
+            <div class="col-4 centrado flex-column">
+                <h2>Ingresa las secciones</h2>
+                <h6>En el boton que se encuentra debajo, podes agregar cada sección de los productos que vayas a cargar.
+                    <br>
+                    Una vez que hayas creado tu sección, seleccionala para poder comenzar a agregarle los productos.
+                </h6>
+            </div>
+
+            <div class="col-4 centrado">
+                <img src="../assets/reda3-e1451992147254.png" class="img-bob" alt="">
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container-fluid mt-5">
+            <div class="row">
+                <div class="col-3 vh-100 cont_secciones p-0">
+
+                    <div class="centrado">
+                        <button type="button" class="btn color30 w-75 centrado " data-bs-toggle="modal"
+                        data-bs-target="#exampleModal">+ Agregar sección</button>
+                    </div>
+                    
+
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Escribe un nombre para tu sección
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <input type="text" class="form-control" id="inputCrearSection">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn color10"
+                                        data-bs-dismiss="modal">Cerrar</button>
+                                    <button id="btnguardoSection" type="button" class="btn color30"
+                                        data-bs-dismiss="modal">Guardar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <ul id="ulSecciones" class="list-group list-group-flush centrado w-100">
+                                         
+                    </ul>
+                </div>
+
+                <div class="col-9 p-0">
+                    <div class="d-flex justify-conte justify-content-around cont_prod">
+                        <h4 id="nombreSeccion">Nombre sección</h4>
+                        <button class="btn color30" type="button" data-bs-toggle="offcanvas"
+                            data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Añadir productos</button>
+
+                        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
+                            aria-labelledby="offcanvasRightLabel">
+                            <div class="offcanvas-header">
+                                <h5 id="offcanvasRightLabel">Completa la información de tus productos</h5>
+                                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="offcanvas-body">
+
+                                <h6>Nombre del producto</h6>
+                                <div class="modal-body p-0 mb-4">
+                                    <input id="inputNombre" type="text" class="form-control">
+                                </div>
+
+                                <h6>Ingrese una descripción</h6>
+                                <div class="modal-body p-0 mb-4">
+                                    <input id="inputDescripcion" type="text" class="form-control">
+                                </div>
+
+                                <h6>Ingrese el precio</h6>
+                                <div class="modal-body p-0 mb-4">
+                                    <input id="inputPrecio" type="number" class="form-control">
+                                </div>
+
+                                <h6>Asigna una sección</h6>
+                                <div class="input-group mb-3">
+                                    <label class="input-group-text" for="inputGroupSelect01">Categoría</label>
+                                    <select class="form-select select" id="inputGroupSelect01">
+                                        <option selected id="optionSelected">Selecciona una</option>
+                                    </select>
+                                </div>
+                                <button type="button" id="btnCreoProducto" class="btn color30 mt-3 d-flex" data-bs-dismiss="modal">Guardar</button>
+                                    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        </div>
+    </main>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script src="../app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
