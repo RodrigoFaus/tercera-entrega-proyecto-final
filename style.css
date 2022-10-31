@@ -25,6 +25,17 @@ body{
     
 }
 
+.contenedor-prod {
+    display: none;
+}
+
+.active {
+    display: grid;
+
+}
+
+
+
 
 .cont_secciones {
     border: 0.5px solid #39383D;

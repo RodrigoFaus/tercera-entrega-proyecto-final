@@ -12,14 +12,16 @@
 </head>
 
 <body>
+    <img src="" alt="">
 
     <header class="container-fluid vw-100">
         <div class="row">
+            <!-- Img header izquierda -->
             <div class="col-4 centrado">
                 <img src="../assets/reda1-e1451992128157.png" class="img-bob" alt="">
             </div>
-            
 
+            <!-- Texto de instrucciones para usar la app -->
             <div class="col-4 centrado flex-column">
                 <h2>Ingresa las secciones</h2>
                 <h6>En el boton que se encuentra debajo, podes agregar cada sección de los productos que vayas a cargar.
@@ -27,7 +29,7 @@
                     Una vez que hayas creado tu sección, seleccionala para poder comenzar a agregarle los productos.
                 </h6>
             </div>
-
+            <!-- Img header derecha -->
             <div class="col-4 centrado">
                 <img src="../assets/reda3-e1451992147254.png" class="img-bob" alt="">
             </div>
@@ -39,12 +41,13 @@
             <div class="row">
                 <div class="col-3 vh-100 cont_secciones p-0">
 
+                    <!-- Btn que agrega las secciones -->
                     <div class="centrado">
                         <button type="button" class="btn color30 w-75 centrado " data-bs-toggle="modal"
-                        data-bs-target="#exampleModal">+ Agregar sección</button>
+                            data-bs-target="#exampleModal">+ Agregar sección</button>
                     </div>
-                    
 
+                    <!-- Modal para cargar el nombre de la sección -->
                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                         aria-hidden="true">
                         <div class="modal-dialog">
@@ -59,8 +62,7 @@
                                     <input type="text" class="form-control" id="inputCrearSection">
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn color10"
-                                        data-bs-dismiss="modal">Cerrar</button>
+                                    <button type="button" class="btn color10" data-bs-dismiss="modal">Cerrar</button>
                                     <button id="btnguardoSection" type="button" class="btn color30"
                                         data-bs-dismiss="modal">Guardar</button>
                                 </div>
@@ -68,17 +70,20 @@
                         </div>
                     </div>
 
-
+                    <!--Deposito del nombre de las secciones -->
                     <ul id="ulSecciones" class="list-group list-group-flush centrado w-100">
-                                         
+
                     </ul>
                 </div>
 
+                <!-- Barra donde se muestar el nombre de la seccion y btn de añadir productos -->
                 <div class="col-9 p-0">
                     <div class="d-flex justify-conte justify-content-around cont_prod">
                         <h4 id="nombreSeccion">Nombre sección</h4>
                         <button class="btn color30" type="button" data-bs-toggle="offcanvas"
                             data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Añadir productos</button>
+
+                        <!--Despligue de formulario para cargar la info de productos -->
 
                         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
                             aria-labelledby="offcanvasRightLabel">
@@ -111,10 +116,16 @@
                                         <option selected id="optionSelected">Selecciona una</option>
                                     </select>
                                 </div>
-                                <button type="button" id="btnCreoProducto" class="btn color30 mt-3 d-flex" data-bs-dismiss="modal">Guardar</button>
-                                    
+                                <button type="button" id="btnCreoProducto" class="btn color30 mt-3 d-flex"
+                                    data-bs-dismiss="modal">Guardar</button>
                             </div>
+
                         </div>
+                    </div>
+                    
+                    <!-- Div donde se depositan los productos creados -->
+                    <div id="divProd">
+                        
                     </div>
                 </div>
 
@@ -142,3 +153,10 @@
 </body>
 
 </html>
+
+
+<!-- <div id="cind1" data-percent="25">
+ 
+    <script>
+    document.getElementById("cind1").dataset.percent="50";
+    </script> -->
