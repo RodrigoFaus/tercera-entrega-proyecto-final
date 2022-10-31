@@ -1,10 +1,19 @@
+/////////// Local storage //////////////
+
+
 
 /////////// Arrays generales //////////////
 
-const arraySecciones = []
+let arraySecciones = []
 const arrayProductos = []
+const arrayCards = []
 
-/////////// Contructor //////////////
+
+
+
+
+
+/////////// Constructor //////////////
 
 class Menu {
     constructor(nombre, descripcion, precio, categoria) {
@@ -25,11 +34,12 @@ let btnguardoSection = document.getElementById("btnguardoSection")
 
 
 btnguardoSection.addEventListener("click", () => {
-   
     let inputCrearSection = document.getElementById("inputCrearSection").value
     arraySecciones.push(inputCrearSection)
-    creoSección();
+    localStorage.setItem("arraySeccionesStorage", JSON.stringify(arraySecciones))
+    creoSeccion();
     asignoSecciones();
+
 
 
 })
@@ -37,30 +47,31 @@ btnguardoSection.addEventListener("click", () => {
 
 
 // Funcion que crea las secciones
-function creoSección() {
+function creoSeccion() {
+
 
     let ulLista = document.getElementById("ulSecciones")
     let li = document.createElement("li")
     let nombreSeccion = document.getElementById("nombreSeccion")
 
-    li.classList = "list-group-item w-100 centrado mt-2 mb-2  btn bg-blanco-letrasv rounded fs-5 seleccionado"
-    ulLista.classList = "list-group-item"
 
 
     arraySecciones.forEach(section => {
 
         li.textContent = section
-        li.classList = "secciones"
+        li.classList = "secciones btn w-75 centrado p-1 mb-2 mt-2 bg-blanco-letrasv  fs-5  border-color30"
+        ulLista.classList = "m-0 p-0  centrado flex-column mt-1"
 
-        li.setAttribute("data-categorias",section)
+        li.setAttribute("data-categorias", section)
         ulLista.appendChild(li)
-        
+
 
         //Event que cambia de nombre la sección para que el usuario sepa en que seccion esta
         li.addEventListener("click", () => {
             nombreSeccion.textContent = section
 
         })
+
 
     })
 
@@ -70,41 +81,42 @@ function creoSección() {
 }
 
 //Funcion que permite mostrar los productos que corresponda a cada seccion
-function filtraContenidoSeccion(){
-	const seccionesCreadas = document.querySelectorAll(".secciones")
-	const contenedorProductosCreados = document.querySelectorAll(".contenedor-prod")
-	let categoriaActiva = null;
-
-	seccionesCreadas.forEach((seccionCreada) => {
-
-		seccionCreada.addEventListener("click", (e) => {
-
-			seccionesCreadas.forEach((elemento) => {
-				elemento.classList.remove("active")
+function filtraContenidoSeccion() {
+    const seccionesCreadas = document.querySelectorAll(".secciones")
+    const contenedorProductosCreados = document.querySelectorAll(".contenedor-prod")
+    let categoriaActiva = null;
 
 
-			e.currentTarget.classList.toggle("active")
-			categoriaActiva = seccionCreada.dataset.categorias;
-			
-			
-			// Se activa el contenedor de productos que corresponde
-			contenedorProductosCreados.forEach((contenedor) => {
 
-				if (contenedor.dataset.categorias === categoriaActiva) {
-					contenedor.classList.add("active")
+    seccionesCreadas.forEach((seccionCreada) => {
 
-				} else {
-					contenedor.classList.remove("active")
-				}
+        seccionCreada.addEventListener("click", (e) => {
 
-			})
+            seccionesCreadas.forEach((elemento) => {
+                elemento.classList.remove("active")
 
-			})
+                e.currentTarget.classList.toggle("active")
+                categoriaActiva = seccionCreada.dataset.categorias;
 
-		})
-	
-	})
-	
+
+                // Se activa el contenedor de productos que corresponde
+                contenedorProductosCreados.forEach((contenedor) => {
+
+                    if (contenedor.dataset.categorias === categoriaActiva) {
+                        contenedor.classList.add("active")
+
+                    } else {
+                        contenedor.classList.remove("active")
+                    }
+
+                })
+
+            })
+
+        })
+
+    })
+
 }
 
 
@@ -118,15 +130,10 @@ function asignoSecciones() {
         option.textContent = section
         select.appendChild(option)
 
-
     })
 
 }
 
-
-//Funcion para que cada vez que toco la seccion me muestre asas
-
-console.log(arraySecciones)
 
 
 /////////// Producto //////////////
@@ -138,7 +145,7 @@ let btnCreoProducto = document.getElementById("btnCreoProducto")
 btnCreoProducto.addEventListener("click", () => {
     creoProductos();
     filtraContenidoSeccion();
-   
+
 
 })
 
@@ -149,33 +156,40 @@ function creoProductos() {
     let inputDescripcion = document.getElementById("inputDescripcion").value
     let inputPrecio = document.getElementById("inputPrecio").value
     let asignarOption = document.getElementById("inputGroupSelect01").value
-   
+
 
     let producto = new Menu(inputNombre, inputDescripcion, inputPrecio, asignarOption)
 
     arrayProductos.push(producto)
-  
 
-        document.getElementById("inputNombre").value = ""
-        document.getElementById("inputDescripcion").value = ""
-        document.getElementById("inputPrecio").value = ""
-        document.getElementById("inputGroupSelect01").value = ""
+    localStorage.setItem("arrayProductos", JSON.stringify(arrayProductos))
 
-    
+
+    document.getElementById("inputNombre").value = ""
+    document.getElementById("inputDescripcion").value = ""
+    document.getElementById("inputPrecio").value = ""
+    document.getElementById("inputGroupSelect01").value = ""
+
+
     generoCard(producto);
 
 
 }
 
-function generoCard (producto) {
-	let depositoProductos = document.getElementById("divProd")
-	let divCard = document.createElement("div")
-	
-            divCard.innerHTML =`<div class="row g-0">
+
+
+//Función que muestra los productos cargados
+
+function generoCard(producto) {
+    let depositoProductos = document.getElementById("divProd")
+    let divCard = document.createElement("div")
+
+    divCard.innerHTML = `<div class="row g-0">
                                     <div class="col-md-4">
-                                    
+                                    <img src="https://www.bogotraveltours.com/wp-content/uploads/2016/11/icono-comidas.png" class="img-fluid rounded-start cont_secciones" alt="...">
                                     </div>
                                     <div class="col-md-8">
+                                    
                                         <div class="card-body">
                                             <h3 class="card-title">${producto.nombre}</h3>
                                             <p class="card-text">${producto.descripcion}</p>
@@ -186,25 +200,31 @@ function generoCard (producto) {
                             </div>
 `
 
-	divCard.setAttribute("data-categorias",producto.categoria)
-    divCard.setAttribute("style","max-width: 540px;")
-	divCard.classList = "contenedor-prod card mb-3"
-	
-
-	depositoProductos.appendChild(divCard)
+    divCard.setAttribute("data-categorias", producto.categoria)
+    divCard.setAttribute("style", "max-width: 540px;")
+    divCard.classList = "contenedor-prod card mb-3"
 
 
-    // nom.textContent = producto.nombre
-	// descrip.textContent = producto.descripcion
+    depositoProductos.appendChild(divCard)
+    arrayCards.push(divCard)
+    console.log(arrayCards)
 
-	// divCard.appendChild(nom)
-	// divCard.appendChild(descrip)
-    
+    localStorage.setItem("arrayCards", JSON.stringify(arrayCards))
 
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+    if (localStorage.getItem("arraySeccionesStorage")) {
 
-//Función que muestra los productos cargados
+        arraySecciones = JSON.parse(localStorage.getItem("arraySeccionesStorage"))
+        creoSeccion();
+        asignoSecciones()
+    }
+
+
+
+})
+
 
 
 

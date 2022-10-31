@@ -12,21 +12,21 @@
 </head>
 
 <body>
-    <img src="" alt="">
-
-    <header class="container-fluid vw-100">
-        <div class="row">
+    <header class="container-fluid vw-100 color30">
+        <div class="row cont-header">
             <!-- Img header izquierda -->
             <div class="col-4 centrado">
                 <img src="../assets/reda1-e1451992128157.png" class="img-bob" alt="">
             </div>
 
             <!-- Texto de instrucciones para usar la app -->
-            <div class="col-4 centrado flex-column">
+            <div class="col-4 centrado flex-column color30-fontw">
                 <h2>Ingresa las secciones</h2>
-                <h6>En el boton que se encuentra debajo, podes agregar cada sección de los productos que vayas a cargar.
-                    <br>
-                    Una vez que hayas creado tu sección, seleccionala para poder comenzar a agregarle los productos.
+                <h6>- En el boton que se encuentra debajo, podes agregar cada sección de los productos que vayas a
+                    cargar.</h6>
+                <h6>- Una vez que hayas creado tu sección, seleccionala para poder comenzar a agregarle los productos.
+                </h6>
+                <h6>- Cuando hayas cargado tu producto, selecciona la sección para que aparezcan los productos cargados.
                 </h6>
             </div>
             <!-- Img header derecha -->
@@ -37,13 +37,13 @@
     </header>
 
     <main>
-        <div class="container-fluid mt-5">
+        <div class="container-fluid mt-0 p-0">
             <div class="row">
                 <div class="col-3 vh-100 cont_secciones p-0">
 
                     <!-- Btn que agrega las secciones -->
                     <div class="centrado">
-                        <button type="button" class="btn color30 w-75 centrado " data-bs-toggle="modal"
+                        <button type="button" class="btn color30-fontw w-75 centrado mt-3" data-bs-toggle="modal"
                             data-bs-target="#exampleModal">+ Agregar sección</button>
                     </div>
 
@@ -79,8 +79,8 @@
                 <!-- Barra donde se muestar el nombre de la seccion y btn de añadir productos -->
                 <div class="col-9 p-0">
                     <div class="d-flex justify-conte justify-content-around cont_prod">
-                        <h4 id="nombreSeccion">Nombre sección</h4>
-                        <button class="btn color30" type="button" data-bs-toggle="offcanvas"
+                        <h4 id="nombreSeccion" class="mt-3 color30-fontw w-50 centrado rounded">Nombre sección</h4>
+                        <button class="btn color30-fontw  mt-3" type="button" data-bs-toggle="offcanvas"
                             data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Añadir productos</button>
 
                         <!--Despligue de formulario para cargar la info de productos -->
@@ -122,10 +122,10 @@
 
                         </div>
                     </div>
-                    
+
                     <!-- Div donde se depositan los productos creados -->
                     <div id="divProd">
-                        
+
                     </div>
                 </div>
 
