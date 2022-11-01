@@ -5,8 +5,8 @@
 /////////// Arrays generales //////////////
 
 let arraySecciones = []
-const arrayProductos = []
-const arrayCards = []
+let arrayProductos = []
+let arrayCards = []
 
 
 
@@ -34,6 +34,8 @@ let btnguardoSection = document.getElementById("btnguardoSection")
 
 
 btnguardoSection.addEventListener("click", () => {
+
+
     let inputCrearSection = document.getElementById("inputCrearSection").value
     arraySecciones.push(inputCrearSection)
     localStorage.setItem("arraySeccionesStorage", JSON.stringify(arraySecciones))
@@ -48,7 +50,6 @@ btnguardoSection.addEventListener("click", () => {
 
 // Funcion que crea las secciones
 function creoSeccion() {
-
 
     let ulLista = document.getElementById("ulSecciones")
     let li = document.createElement("li")
@@ -136,6 +137,9 @@ function asignoSecciones() {
 
 
 
+
+
+
 /////////// Producto //////////////
 
 //Boton para guardar los datos del producto y crearlo
@@ -162,7 +166,7 @@ function creoProductos() {
 
     arrayProductos.push(producto)
 
-    localStorage.setItem("arrayProductos", JSON.stringify(arrayProductos))
+    localStorage.setItem("arrayProductosStorage", JSON.stringify(arrayProductos))
 
 
     document.getElementById("inputNombre").value = ""
@@ -170,9 +174,8 @@ function creoProductos() {
     document.getElementById("inputPrecio").value = ""
     document.getElementById("inputGroupSelect01").value = ""
 
-
-    generoCard(producto);
-
+    generoCard(producto)
+    
 
 }
 
@@ -209,22 +212,54 @@ function generoCard(producto) {
     arrayCards.push(divCard)
     console.log(arrayCards)
 
-    localStorage.setItem("arrayCards", JSON.stringify(arrayCards))
+    localStorage.setItem("arrayCardsStorage", JSON.stringify(arrayCards))
 
 }
+
+//////////////////////////////////////////// Local storage //////////////////////////////////////////// 
 
 document.addEventListener("DOMContentLoaded", () => {
     if (localStorage.getItem("arraySeccionesStorage")) {
 
         arraySecciones = JSON.parse(localStorage.getItem("arraySeccionesStorage"))
-        creoSeccion();
-        asignoSecciones()
+    
+        //Vuelvo a ejecutar el codigo para que aparezcan las secciones generadas y para que se les pueda asignar
+        //las mismas a los productos
+        arraySecciones.forEach((section) => {
+
+            //Variables para la lista de secciones a la izquierda de la pantalla
+            let ulLista = document.getElementById("ulSecciones")
+            let li = document.createElement("li")
+            let nombreSeccion = document.getElementById("nombreSeccion")
+            //Variables para seleccionar la seccion al momento de crear el producto
+            let select = document.querySelector(".select")
+            let option = document.createElement("option")
+
+            li.textContent = section
+            li.classList = "secciones btn w-75 centrado p-1 mb-2 mt-2 bg-blanco-letrasv  fs-5  border-color30"
+            ulLista.classList = "m-0 p-0  centrado flex-column mt-1"
+
+            li.setAttribute("data-categorias", section)
+            ulLista.appendChild(li)
+
+            option.textContent = section
+            select.appendChild(option)
+
+
+
+            //Event que cambia de nombre la sección para que el usuario sepa en que seccion esta
+            li.addEventListener("click", () => {
+                nombreSeccion.textContent = section
+
+            })
+
+
+        })
+               
     }
 
 
-
 })
-
 
 
 
