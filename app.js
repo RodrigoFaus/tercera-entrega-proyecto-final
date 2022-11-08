@@ -1,15 +1,9 @@
-/////////// Local storage //////////////
-
-
 
 /////////// Arrays generales //////////////
 
 let arraySecciones = []
+let arraySeccionesNoRepeat = []
 let arrayProductos = []
-let arrayCards = []
-
-
-
 
 
 
@@ -31,18 +25,36 @@ class Menu {
 
 let btnguardoSection = document.getElementById("btnguardoSection")
 
-
-
 btnguardoSection.addEventListener("click", () => {
 
-
+    //Capturo el valor del input
     let inputCrearSection = document.getElementById("inputCrearSection").value
-    arraySecciones.push(inputCrearSection)
-    localStorage.setItem("arraySeccionesStorage", JSON.stringify(arraySecciones))
-    creoSeccion();
-    asignoSecciones();
+    //Capturo solamente el elemento del input para agregarle un estilo 
+    let inputCrearSection2 = document.getElementById("inputCrearSection")
+    
+        if (inputCrearSection.trim() !== "" ) { 
 
+            // btnguardoSection.setAttribute("data-bs-dismiss", "modal")
+            arraySecciones.push(inputCrearSection)
+            btnguardoSection.removeAttribute("data-bs-dismiss")
+            inputCrearSection2.classList.remove("is-invalid")
 
+            creoSeccion();
+            asignoSecciones();
+
+            localStorage.setItem("arraySeccionesNoRepeatStorage", JSON.stringify(arraySeccionesNoRepeat))
+           
+        } else {
+           
+            alert("No puede estar vacio");
+            inputCrearSection2.classList.add("is-invalid")
+            
+        }
+       
+
+    
+
+   
 
 })
 
@@ -54,27 +66,44 @@ function creoSeccion() {
     let ulLista = document.getElementById("ulSecciones")
     let li = document.createElement("li")
     let nombreSeccion = document.getElementById("nombreSeccion")
+    let inputCrearSection2 = document.getElementById("inputCrearSection")
 
+     //Ciclo que me permite eliminar nombres duplicados de las secciones en el arraySecciones
+     for(let i = 0; i < arraySecciones.length; i++){
+        if(arraySeccionesNoRepeat.includes(arraySecciones[i])){
+            inputCrearSection2.classList.add("is-invalid")
+        
+        } else {
+            arraySeccionesNoRepeat.push(arraySecciones[i])
+            inputCrearSection2.classList.remove("is-invalid")
+            // alert(`El nombre ya existe, por favor, intente con otro nombre ${arraySecciones[i]}`)
 
+            arraySeccionesNoRepeat.forEach(section => {
 
-    arraySecciones.forEach(section => {
+                li.textContent = section
+                li.classList = "secciones btn w-75 centrado p-1 mb-2 mt-2 bg-blanco-letrasv  fs-5  border-color30"
+                ulLista.classList = "m-0 p-0  centrado flex-column mt-1"
+        
+                li.setAttribute("data-categorias", section)
+                ulLista.appendChild(li)
+        
+        
+                //Event que cambia de nombre la sección para que el usuario sepa en que seccion esta
+                li.addEventListener("click", () => {
+                    nombreSeccion.textContent = section
+        
+                })
 
-        li.textContent = section
-        li.classList = "secciones btn w-75 centrado p-1 mb-2 mt-2 bg-blanco-letrasv  fs-5  border-color30"
-        ulLista.classList = "m-0 p-0  centrado flex-column mt-1"
+                
+        
+        
+            })
+            console.log(arraySeccionesNoRepeat)
+        }
+    }
+   
 
-        li.setAttribute("data-categorias", section)
-        ulLista.appendChild(li)
-
-
-        //Event que cambia de nombre la sección para que el usuario sepa en que seccion esta
-        li.addEventListener("click", () => {
-            nombreSeccion.textContent = section
-
-        })
-
-
-    })
+    
 
     //Limpio el input
     document.getElementById("inputCrearSection").value = ""
@@ -127,7 +156,7 @@ function asignoSecciones() {
     let select = document.querySelector(".select")
     let option = document.createElement("option")
 
-    arraySecciones.forEach(section => {
+    arraySeccionesNoRepeat.forEach(section => {
         option.textContent = section
         select.appendChild(option)
 
@@ -149,7 +178,8 @@ let btnCreoProducto = document.getElementById("btnCreoProducto")
 btnCreoProducto.addEventListener("click", () => {
     creoProductos();
     filtraContenidoSeccion();
-
+   
+  
 
 })
 
@@ -168,73 +198,79 @@ function creoProductos() {
 
     localStorage.setItem("arrayProductosStorage", JSON.stringify(arrayProductos))
 
-
     document.getElementById("inputNombre").value = ""
     document.getElementById("inputDescripcion").value = ""
     document.getElementById("inputPrecio").value = ""
     document.getElementById("inputGroupSelect01").value = ""
 
-    generoCard(producto)
+    // generoCard(producto)
+
+    generoCard()
     
-
 }
-
 
 
 //Función que muestra los productos cargados
 
-function generoCard(producto) {
+function generoCard() {
+  
     let depositoProductos = document.getElementById("divProd")
+
+    depositoProductos.innerHTML = ""
+
+    arrayProductos.forEach((producto) => {    
     let divCard = document.createElement("div")
 
-    divCard.innerHTML = `<div class="row g-0">
-                                    <div class="col-md-4">
-                                    <img src="https://www.bogotraveltours.com/wp-content/uploads/2016/11/icono-comidas.png" class="img-fluid rounded-start cont_secciones" alt="...">
-                                    </div>
-                                    <div class="col-md-8">
-                                    
-                                        <div class="card-body">
-                                            <h3 class="card-title">${producto.nombre}</h3>
-                                            <p class="card-text">${producto.descripcion}</p>
-                                            <h4 class="card-text">$${producto.precio}</h4>
-                                        </div>
-                                    </div>
+    divCard.innerHTML = ` <div class="row g-0">
+                                <div class="col-md-3 border-img-card centrado">
+                                 <img src="https://www.kiddo.com.ar/img/Logo_02.png" class="img-fluid rounded-start max-width " alt="...">
+                                </div>
+                            <div class="col-md-9">
+                                <div class="card-body d-flex flex-column justify-content-start">
+                                        <h5 class="card-title">${producto.nombre} </h5>
+                                        <p class="card-text">${producto.descripcion}</p>
+                                        <h5 class="card-text pt-4">$${producto.precio}</h5>
                                 </div>
                             </div>
-`
-
+                       </div> `
+               
+                    
     divCard.setAttribute("data-categorias", producto.categoria)
-    divCard.setAttribute("style", "max-width: 540px;")
-    divCard.classList = "contenedor-prod card mb-3"
+    divCard.classList = "contenedor-prod card mb-3 w-75"
 
+    
 
     depositoProductos.appendChild(divCard)
-    arrayCards.push(divCard)
-    console.log(arrayCards)
 
-    localStorage.setItem("arrayCardsStorage", JSON.stringify(arrayCards))
+    })
 
 }
 
-//////////////////////////////////////////// Local storage //////////////////////////////////////////// 
+
+
+
+////////////////////////////////////////// Local storage //////////////////////////////////////////// 
 
 document.addEventListener("DOMContentLoaded", () => {
-    if (localStorage.getItem("arraySeccionesStorage")) {
+    if (localStorage.getItem("arraySeccionesNoRepeatStorage")) {
 
-        arraySecciones = JSON.parse(localStorage.getItem("arraySeccionesStorage"))
+        arraySeccionesNoRepeat = JSON.parse(localStorage.getItem("arraySeccionesNoRepeatStorage"))
+        arrayProductos = JSON.parse(localStorage.getItem("arrayProductosStorage"))
     
         //Vuelvo a ejecutar el codigo para que aparezcan las secciones generadas y para que se les pueda asignar
         //las mismas a los productos
-        arraySecciones.forEach((section) => {
+        arraySeccionesNoRepeat.forEach((section) => {
 
             //Variables para la lista de secciones a la izquierda de la pantalla
             let ulLista = document.getElementById("ulSecciones")
             let li = document.createElement("li")
             let nombreSeccion = document.getElementById("nombreSeccion")
+
             //Variables para seleccionar la seccion al momento de crear el producto
             let select = document.querySelector(".select")
             let option = document.createElement("option")
-
+           
+            //
             li.textContent = section
             li.classList = "secciones btn w-75 centrado p-1 mb-2 mt-2 bg-blanco-letrasv  fs-5  border-color30"
             ulLista.classList = "m-0 p-0  centrado flex-column mt-1"
@@ -255,15 +291,42 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         })
+
+      
+        arrayProductos.forEach((producto) => {
+            let depositoProductos = document.getElementById("divProd")
+
+            let divCard = document.createElement("div")
+
+            divCard.innerHTML = ` <div class="row g-0">
+                                        <div class="col-md-3 border-img-card centrado">
+                                        <img src="https://www.kiddo.com.ar/img/Logo_02.png" class="img-fluid rounded-start max-width " alt="...">
+                                        </div>
+                                    <div class="col-md-9">
+                                        <div class="card-body d-flex flex-column justify-content-start">
+                                                <h5 class="card-title">${producto.nombre} </h5>
+                                                <p class="card-text">${producto.descripcion}</p>
+                                                <h5 class="card-text pt-4">$${producto.precio}</h5>
+                                        </div>
+                                    </div>
+                            </div> `
+                    
+                            
+            divCard.setAttribute("data-categorias", producto.categoria)
+            divCard.classList = "contenedor-prod card mb-3 w-75 active"
+
+            
+
+            depositoProductos.appendChild(divCard)
+
+                })
+
+                filtraContenidoSeccion();
+
+                ///HACER IDEA DE TODOS LOS PRODUCTOS CADA VEZ QUE SE REINICIA LA PAGINA O FIJARSE DE PONER LA PRIMERA SECCION/
+                //IF la LI.SECCION ESTA ACTIVE, PONER ACTIVE CUANDO CREO EL PRODUCOT//
                
     }
 
-
 })
-
-
-
-
-
-
 

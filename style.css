@@ -51,6 +51,11 @@ body {
     ;
 }
 
+/* .border-denegado{
+    border-color: 1px solid red;
+    box-shadow: 7px 7px 15px red;
+} */
+
 .img-bob {
     width: 35%
 }
@@ -78,11 +83,20 @@ body {
 
 }
 
-/* .bg-blanco-letrasv {
-    
-} */
-
 .secciones:hover {
     background-color: #019366;
     color: white;
+}
+
+.max-width {
+    max-width: 8em;
+}
+
+.min-width {
+    min-width: 10em;
+}
+
+
+.border-img-card {
+    border-right: 1px solid rgb(200, 200, 200);
 }
