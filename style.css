@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;700&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -7,6 +9,7 @@
 body {
     overflow-x: hidden;
     color: #39383D;
+    font-family: 'Oswald', sans-serif;
 }
 
 
@@ -38,8 +41,8 @@ body {
 .color30-fontw {
     background-color: #019366;
     color: white;
+    text-shadow: 1px 1px 2px black;
 }
-
 
 
 .cont_secciones {
@@ -50,11 +53,6 @@ body {
     border-bottom: 0.5px solid #39383D;
     ;
 }
-
-/* .border-denegado{
-    border-color: 1px solid red;
-    box-shadow: 7px 7px 15px red;
-} */
 
 .img-bob {
     width: 35%

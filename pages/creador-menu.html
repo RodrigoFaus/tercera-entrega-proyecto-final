@@ -60,6 +60,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <input type="text" class="form-control " id="inputCrearSection">
+                                    <p class="text-danger d-none p-error">Esa sección ya fue creada, por favor, prueba con otra.</p>                                  
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
@@ -78,7 +79,7 @@
                 <!-- Barra donde se muestar el nombre de la seccion y btn de añadir productos -->
                 <div class="col-9 p-0">
                     <div class="d-flex justify-conte justify-content-around cont_prod">
-                        <h4 id="nombreSeccion" class="mt-3 color30-fontw w-50 centrado rounded">Nombre sección</h4>
+                        <h4 id="nombreSeccion" class="mt-3 pt-1 pb-1 color30-fontw w-50 centrado rounded">Nombre sección</h4>
                         <button class="btn color30-fontw  mt-3" type="button" data-bs-toggle="offcanvas"
                             data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Añadir productos</button>
 
@@ -87,32 +88,41 @@
                         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
                             aria-labelledby="offcanvasRightLabel">
                             <div class="offcanvas-header">
-                                <h5 id="offcanvasRightLabel">Completa la información de tus productos</h5>
+                                <h4 id="offcanvasRightLabel">Completa la información de tus productos</h4>
                                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
                                     aria-label="Close"></button>
                             </div>
-                            <div class="offcanvas-body">
 
-                                <h6>Nombre del producto</h6>
+                            
+
+                            <div class="offcanvas-body pb-5">
+                                <div class="mb-5"><p>Los campos que contengan un (*) son obligatorios <br> para poder crear tu producto</p></div>
+
+                                <h5>Nombre del producto*</h5>
                                 <div class="modal-body p-0 mb-4">
                                     <input id="inputNombre" type="text" class="form-control">
                                 </div>
 
-                                <h6>Ingrese una descripción</h6>
+                                <h5>Ingrese una descripción*</h5>
                                 <div class="modal-body p-0 mb-4">
                                     <input id="inputDescripcion" type="text" class="form-control">
                                 </div>
 
-                                <h6>Ingrese el precio</h6>
+                                <h5>Ingrese el precio*</h5>
                                 <div class="modal-body p-0 mb-4">
                                     <input id="inputPrecio" type="number" class="form-control">
                                 </div>
 
-                                <h6>Asigna una sección</h6>
+                                <h5>Ingrese una imagen*</h5>
+                                <div class="input-group mb-5">
+                                    <input id="ingresoImg" accept="image/*" type="file" multiple>
+                                </div>
+
+                                <h5>Asigna una sección*</h5>
                                 <div class="input-group mb-3">
                                     <label class="input-group-text" for="inputGroupSelect01">Categoría</label>
                                     <select class="form-select select" id="inputGroupSelect01">
-                                        <option selected id="optionSelected">Selecciona una</option>
+                                        <option selected id="optionSelected">Elegir</option>
                                     </select>
                                 </div>
                                 <button type="button" id="btnCreoProducto" class="btn color30-fontw centrado m-0 "
@@ -136,7 +146,6 @@
         </div>
         </div>
     </main>
-
 
 
 
