@@ -80,7 +80,7 @@
                 <div class="col-9 p-0">
                     <div class="d-flex justify-conte justify-content-around cont_prod">
                         <h4 id="nombreSeccion" class="mt-3 pt-1 pb-1 color30-fontw w-50 centrado rounded">Nombre sección</h4>
-                        <button class="btn color30-fontw  mt-3" type="button" data-bs-toggle="offcanvas"
+                        <button id="btnAñadirProductos" class="btn color30-fontw  mt-3" type="button" data-bs-toggle="offcanvas"
                             data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Añadir productos</button>
 
                         <!--Despligue de formulario para cargar la info de productos -->
@@ -101,16 +101,19 @@
                                 <h5>Nombre del producto*</h5>
                                 <div class="modal-body p-0 mb-4">
                                     <input id="inputNombre" type="text" class="form-control">
+                                    <p></p>
                                 </div>
 
                                 <h5>Ingrese una descripción*</h5>
                                 <div class="modal-body p-0 mb-4">
                                     <input id="inputDescripcion" type="text" class="form-control">
+                                    <p></p>
                                 </div>
 
                                 <h5>Ingrese el precio*</h5>
                                 <div class="modal-body p-0 mb-4">
                                     <input id="inputPrecio" type="number" class="form-control">
+                                    <p></p>
                                 </div>
 
                                 <h5>Ingrese una imagen*</h5>
@@ -122,8 +125,9 @@
                                 <div class="input-group mb-3">
                                     <label class="input-group-text" for="inputGroupSelect01">Categoría</label>
                                     <select class="form-select select" id="inputGroupSelect01">
-                                        <option selected id="optionSelected">Elegir</option>
+                                        <option selected id="optionSelected"></option>
                                     </select>
+                                    <p></p>
                                 </div>
                                 <button type="button" id="btnCreoProducto" class="btn color30-fontw centrado m-0 "
                                     data-bs-dismiss="modal">Guardar</button>
