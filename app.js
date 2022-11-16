@@ -13,7 +13,7 @@ class Menu {
     constructor(nombre, descripcion, precio, categoria, img) {
         this.nombre = nombre
         this.descripcion = descripcion
-        this.precio = precio
+        this.precio = parseFloat(precio) 
         this.categoria = categoria
         this.img = img
     }
@@ -48,8 +48,8 @@ btnguardoSection.addEventListener("click", () => {
 
     } else {
 
-        alert("No puede estar vacio");
-        inputCrearSection2.classList.add("is-invalid")
+        Swal.fire("El campo puede estar vacio")
+       
 
     }
 })
@@ -66,14 +66,13 @@ function creoSeccion() {
     let pError = document.querySelector(".p-error")
     let select = document.querySelector(".select")
     let option = document.createElement("option")
+    let optionSelected = document.getElementById("optionSelected")
 
     //Ciclo que me permite eliminar nombres duplicados de las secciones en el arraySecciones
     for (let i = 0; i < arraySecciones.length; i++) {
         if (arraySeccionesNoRepeat.includes(arraySecciones[i])) {
             inputCrearSection2.classList.add("is-invalid")
             pError.classList.remove("d-none")
-
-
 
         } else {
             arraySeccionesNoRepeat.push(arraySecciones[i])
@@ -95,6 +94,8 @@ function creoSeccion() {
                 //Event que cambia de nombre la sección para que el usuario sepa en que seccion esta
                 li.addEventListener("click", () => {
                     nombreSeccion.textContent = section
+                    optionSelected.textContent = section
+                    
 
                 })
 
@@ -154,73 +155,150 @@ function filtraContenidoSeccion() {
 
 /////////// Producto //////////////
 
-//Boton para guardar los datos del producto y crearlo
 let btnCreoProducto = document.getElementById("btnCreoProducto")
-
-let btnAñadirProductos = document.getElementById("btnAñadirProductos")
-btnAñadirProductos.addEventListener("click", () => {
-    const inputNombre = document.getElementById("inputNombre")
-    const inputDescripcion = document.getElementById("inputDescripcion")
-    const inputPrecio = document.getElementById("inputPrecio") 
-    const asignarOption = document.getElementById("inputGroupSelect01")
-    const ingresoImg = document.getElementById("ingresoImg")
-
-    const validarInputs = (mensaje, e) => {
-        const input = e.target;
-        const inputValor = e.target.value;
-
-        if(inputValor.trim().length === 0) {
-            input.classList.add("is-invalid")
-            input.nextElementSibling.textContent = mensaje
-            input.nextElementSibling.classList.add("invalid-feedback")
-        } else {
-            input.classList.remove("is-invalid")
-
             btnCreoProducto.addEventListener("click", () => {
                 creoProductos();
                 filtraContenidoSeccion();        
             })
+
+//Boton para guardar los datos del producto y crearlo
+// let btnCreoProducto = document.getElementById("btnCreoProducto")
+
+// let btnAñadirProductos = document.getElementById("btnAñadirProductos")
+// btnAñadirProductos.addEventListener("click", () => {
+//     const inputNombre = document.getElementById("inputNombre")
+//     const inputDescripcion = document.getElementById("inputDescripcion")
+//     const inputPrecio = document.getElementById("inputPrecio") 
+//     const asignarOption = document.getElementById("inputGroupSelect01")
+//     const ingresoImg = document.getElementById("ingresoImg")
+
+//     const validarInputs = (mensaje, e) => {
+//         const input = e.target;
+//         const inputValor = e.target.value;
+
+//         if(inputValor.trim().length === 0) {
+//             input.classList.add("is-invalid")
+//             input.nextElementSibling.textContent = mensaje
+//             input.nextElementSibling.classList.add("invalid-feedback")
+//         } else {
+
+//             input.classList.remove("is-invalid")
+//             //Agrega un evento a al boton de crear producto y ejecuta la función de crear productos
+//             btnCreoProducto.addEventListener("click", () => {
+//                 creoProductos();
+//                 filtraContenidoSeccion();        
+//             })
            
-        }   
-        
-    }
+//         }      
+//     }
 
-    inputNombre.addEventListener("blur",(e) => validarInputs("Por favor, completa este campo", e))
-    inputDescripcion.addEventListener("blur",(e) => validarInputs("Por favor, completa este campo", e))
-    inputPrecio.addEventListener("blur",(e) => validarInputs("Por favor, completa este campo", e))
-    asignarOption.addEventListener("blur",(e) => validarInputs("Por favor, elige una sección", e))
+//     inputNombre.addEventListener("blur",(e) => validarInputs("Por favor, completa este campo", e))
+//     inputDescripcion.addEventListener("blur",(e) => validarInputs("Por favor, completa este campo", e))
+//     inputPrecio.addEventListener("blur",(e) => validarInputs("Por favor, completa este campo", e))
+//     asignarOption.addEventListener("blur",(e) => validarInputs("Por favor, elige una sección", e))
 
-})
+// })
+
 
 
 // Funcion que crea el producto
 function creoProductos() {
 
     //Capturo el valor de los inputs que aparecen cuando toco el boton de "Agregar Producto"
-    let inputNombre = document.getElementById("inputNombre").value
-    let inputDescripcion = document.getElementById("inputDescripcion").value
-    let inputPrecio = document.getElementById("inputPrecio").value
-    let asignarOption = document.getElementById("inputGroupSelect01").value
-    let ingresoImg = document.getElementById("ingresoImg").value
+    let inputNombre = document.getElementById("inputNombre")
+    let inputDescripcion = document.getElementById("inputDescripcion")
+    let inputPrecio = document.getElementById("inputPrecio")
+    let asignarOption = document.getElementById("inputGroupSelect01")
+    let ingresoImg = document.getElementById("ingresoImg")
 
-    //Una vez capturado ese valor, genero un nuevo item/producto a traves de mi clase 
-    let producto = new Menu(inputNombre, inputDescripcion, inputPrecio, asignarOption, ingresoImg)
-    //Lo pusheo a mi array y lo seteo en el localStorage
-    arrayProductos.push(producto)
-    localStorage.setItem("arrayProductosStorage", JSON.stringify(arrayProductos))
+    let inputNombreValue = inputNombre.value
+    let inputDescripcionValue = inputDescripcion.value
+    let inputPrecioValue = inputPrecio.value
+    let asignarOptionValue = asignarOption.value
 
-    //Limpio los inputs para que esten vacíos luego de agregar un producto
-    document.getElementById("inputNombre").value = ""
-    document.getElementById("inputDescripcion").value = ""
-    document.getElementById("inputPrecio").value = ""
-    document.getElementById("inputGroupSelect01").value = ""
-    document.getElementById("ingresoImg").value = ""
+    if (inputNombreValue.trim().length === 0) {
+        inputNombre.classList.add("is-invalid")
+        inputNombre.nextElementSibling.textContent = "Por favor, completa este campo"
+        inputNombre.nextElementSibling.classList.add("invalid-feedback")
 
-    //Llamo a la función que genera una card por cada producto creado
-    generoCard()
-    //Llamo a la función que me permite borrar los productos individualmente
-    borrarProductos()  
+        inputNombre.addEventListener("click", () => {
+            inputNombre.classList.remove("is-invalid")
+            inputNombre.nextElementSibling.textContent = ""
+        })
 
+    }
+    if (inputDescripcionValue.trim().length === 0) {
+        inputDescripcion.classList.add("is-invalid")
+        inputDescripcion.nextElementSibling.textContent = "Por favor, completa este campo"
+        inputDescripcion.nextElementSibling.classList.add("invalid-feedback")
+        inputDescripcion.addEventListener("click", () => {
+            inputDescripcion.classList.remove("is-invalid")
+            inputDescripcion.nextElementSibling.textContent = ""
+        })
+    }
+    if (inputPrecioValue.trim().length === 0) {
+        inputPrecio.classList.add("is-invalid")
+        inputPrecio.nextElementSibling.textContent = "Este campo se encuentra vacío o contiene un número negativo"
+        inputPrecio.nextElementSibling.classList.add("invalid-feedback")
+        
+        inputPrecio.addEventListener("click", () => {
+            inputPrecio.classList.remove("is-invalid")
+        inputPrecio.nextElementSibling.textContent = ""
+        })
+
+    } 
+
+    if (asignarOptionValue.trim().length === 0) {
+       
+        asignarOption.classList.add("is-invalid")
+        asignarOption.nextElementSibling.textContent = "Por favor, completa este campo"
+        asignarOption.nextElementSibling.classList.add("invalid-feedback")
+        asignarOption.addEventListener("click", () => {
+            asignarOption.classList.remove("is-invalid")
+            asignarOption.nextElementSibling.textContent = ""
+        })
+
+        
+        
+    }
+    else {
+    
+        inputNombre.classList.remove("is-invalid")
+        inputNombre.nextElementSibling.textContent = ""
+        inputDescripcion.classList.remove("is-invalid")
+        inputDescripcion.nextElementSibling.textContent = ""
+        inputPrecio.classList.remove("is-invalid")
+        inputPrecio.nextElementSibling.textContent = ""
+        asignarOption.classList.remove("is-invalid")
+        asignarOption.nextElementSibling.textContent = ""
+        
+
+        //Remuevo las clases agregadas en los if
+
+        //Una vez capturado ese valor, genero un nuevo item/producto a traves de mi clase 
+        //Lo pusheo a mi array y lo seteo en el localStorage
+  
+
+        let producto = new Menu(inputNombreValue, inputDescripcionValue, inputPrecioValue, asignarOptionValue, ingresoImg)
+
+        arrayProductos.push(producto)
+        localStorage.setItem("arrayProductosStorage", JSON.stringify(arrayProductos))
+    
+        //Limpio los inputs para que esten vacíos luego de agregar un producto
+        document.getElementById("inputNombre").value = ""
+        document.getElementById("inputDescripcion").value = ""
+        document.getElementById("inputPrecio").value = ""
+        document.getElementById("inputGroupSelect01").value = ""
+        document.getElementById("ingresoImg").value = ""
+    
+        //Llamo a la función que genera una card por cada producto creado
+        generoCard()
+        //Llamo a la función que me permite borrar los productos individualmente
+        borrarProductos()  
+
+    }
+
+    
 }
 
 //Función que genera las cards de los productos
@@ -291,14 +369,34 @@ function borrarProductos() {
     borroProducto.forEach((btn) => {
         btn.addEventListener("click", (e) => {
     
-            //Hago un filtro del array de los productos para que coincida el nombre del producto con el dataset del boton
-            arrayProductos = arrayProductos.filter((prod) => prod.nombre !== btn.dataset.nombre)
-            //Seteo el array filtrado para poder modificar el localstorage
-            localStorage.setItem("arrayProductosStorage", JSON.stringify(arrayProductos))
-            //Si el evento cumple el IF va a ejecutar la funcion borre() y va a eliminar el la card que coincida con el id 
-            if (event.srcElement.nodeName == "BUTTON") {
-                borre(e.path[3].id)
-            }
+            //Utilizo una alerta para que el usuario no borro el producto por error al presionar el boton
+            Swal.fire({
+                title: '¿Esta seguro que quiere borrar este producto?',
+                text: "",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Cancelar',
+                confirmButtonText: 'Borrar'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  Swal.fire(
+                    '¡Borrado!',
+                    'Borraste este producto.',
+                    )
+                    //Hago un filtro del array de los productos para que coincida el nombre del producto con el dataset del boton
+                    arrayProductos = arrayProductos.filter((prod) => prod.nombre !== btn.dataset.nombre)
+                    //Seteo el array filtrado para poder modificar el localstorage
+                    localStorage.setItem("arrayProductosStorage", JSON.stringify(arrayProductos))
+                    //Si el evento cumple el IF va a ejecutar la funcion borre() y va a eliminar el la card que coincida con el id 
+                    if (event.srcElement.nodeName == "BUTTON") {
+                        borre(e.path[3].id)
+                    }
+                }
+              })
+
+           
     
         })   
     })
@@ -310,12 +408,14 @@ function borrarProductos() {
 document.addEventListener("DOMContentLoaded", () => {
     if (localStorage.getItem("arraySeccionesNoRepeatStorage")) {
 
+
+        let nombreSeccion = document.getElementById("nombreSeccion")
+        nombreSeccion.textContent = "Todos los productos"
+       
+
         //Llamo a los array que no estan en el localStorage
         arraySeccionesNoRepeat = JSON.parse(localStorage.getItem("arraySeccionesNoRepeatStorage"))
-        arrayProductos = JSON.parse(localStorage.getItem("arrayProductosStorage"))
-
-      
-
+       
         //Vuelvo a ejecutar el codigo para que aparezcan las secciones generadas y para que se les pueda asignar
         //las mismas a los productos
         arraySeccionesNoRepeat.forEach((section) => {
@@ -343,13 +443,17 @@ document.addEventListener("DOMContentLoaded", () => {
             //Event que cambia de nombre la sección para que el usuario sepa en que seccion esta
             li.addEventListener("click", () => {
                 nombreSeccion.textContent = section
+                optionSelected.textContent = section
 
             })
-
-
         })
-        
 
+        filtraContenidoSeccion();
+    
+    }
+
+    if(localStorage.getItem("arrayProductosStorage")){
+        arrayProductos = JSON.parse(localStorage.getItem("arrayProductosStorage"))
 
         let idCounter = 0;
         arrayProductos.forEach((producto) => {
@@ -388,13 +492,10 @@ document.addEventListener("DOMContentLoaded", () => {
         borrarProductos()
         
         
-      
-        
-
         ///HACER IDEA DE TODOS LOS PRODUCTOS CADA VEZ QUE SE REINICIA LA PAGINA O FIJARSE DE PONER LA PRIMERA SECCION/
+        //AÑADE TUS NOMBRE.SECCION (idea)
 
     }
-
 
 })
 
