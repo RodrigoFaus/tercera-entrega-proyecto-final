@@ -33,6 +33,9 @@ btnguardoSection.addEventListener("click", () => {
     let inputCrearSection = document.getElementById("inputCrearSection").value
     //Capturo solamente el elemento del input para agregarle un estilo 
     let inputCrearSection2 = document.getElementById("inputCrearSection")
+    let btnAñadirProductos = document.getElementById("btnAñadirProductos")
+
+ 
 
     //Validación para no permitir crear secciones vacias
     if (inputCrearSection.trim() !== "") {
@@ -40,17 +43,17 @@ btnguardoSection.addEventListener("click", () => {
         arraySecciones.push(inputCrearSection)
         btnguardoSection.removeAttribute("data-bs-dismiss")
         inputCrearSection2.classList.remove("is-invalid")
-
+        //Llamo a la función que crea la sección
         creoSeccion();
 
+        btnAñadirProductos.classList.remove("disabled")
+    
       //Guardo la sección en el local storage
       localStorage.setItem("arraySeccionesNoRepeatStorage", JSON.stringify(arraySeccionesNoRepeat))
 
     } else {
-
-        Swal.fire("El campo puede estar vacio")
-       
-
+        //Alerta para avisar al usuario de que no puede poner el campo vacío
+        Swal.fire("El campo no puede estar vacio")   
     }
 })
 
@@ -64,12 +67,11 @@ function creoSeccion() {
     let nombreSeccion = document.getElementById("nombreSeccion")
     let inputCrearSection2 = document.getElementById("inputCrearSection")
     let pError = document.querySelector(".p-error")
-    let select = document.querySelector(".select")
-    let option = document.createElement("option")
     let optionSelected = document.getElementById("optionSelected")
 
     //Ciclo que me permite eliminar nombres duplicados de las secciones en el arraySecciones
     for (let i = 0; i < arraySecciones.length; i++) {
+        
         if (arraySeccionesNoRepeat.includes(arraySecciones[i])) {
             inputCrearSection2.classList.add("is-invalid")
             pError.classList.remove("d-none")
@@ -90,23 +92,17 @@ function creoSeccion() {
                 li.setAttribute("data-categorias", section)
                 ulLista.appendChild(li)
 
+                 // Me permite asignar las secciones en el modal que se despliega, al momento de crear los productos   
+                optionSelected.textContent = section   
 
                 //Event que cambia de nombre la sección para que el usuario sepa en que seccion esta
                 li.addEventListener("click", () => {
-                    nombreSeccion.textContent = section
-                    optionSelected.textContent = section
-                    
-
+                    nombreSeccion.textContent = section  
+                    optionSelected.textContent = section   
                 })
-
-                // Me permite asignar las secciones en el modal que se despliega, al momento de crear los productos
-                option.textContent = section
-                select.appendChild(option)
-
-
-
+                    
             })
-            // console.log(arraySeccionesNoRepeat)
+            
         }
     }
 
@@ -155,67 +151,29 @@ function filtraContenidoSeccion() {
 
 /////////// Producto //////////////
 
+//Agrego un evento al boton de crear productos
 let btnCreoProducto = document.getElementById("btnCreoProducto")
             btnCreoProducto.addEventListener("click", () => {
                 creoProductos();
                 filtraContenidoSeccion();        
             })
 
-//Boton para guardar los datos del producto y crearlo
-// let btnCreoProducto = document.getElementById("btnCreoProducto")
-
-// let btnAñadirProductos = document.getElementById("btnAñadirProductos")
-// btnAñadirProductos.addEventListener("click", () => {
-//     const inputNombre = document.getElementById("inputNombre")
-//     const inputDescripcion = document.getElementById("inputDescripcion")
-//     const inputPrecio = document.getElementById("inputPrecio") 
-//     const asignarOption = document.getElementById("inputGroupSelect01")
-//     const ingresoImg = document.getElementById("ingresoImg")
-
-//     const validarInputs = (mensaje, e) => {
-//         const input = e.target;
-//         const inputValor = e.target.value;
-
-//         if(inputValor.trim().length === 0) {
-//             input.classList.add("is-invalid")
-//             input.nextElementSibling.textContent = mensaje
-//             input.nextElementSibling.classList.add("invalid-feedback")
-//         } else {
-
-//             input.classList.remove("is-invalid")
-//             //Agrega un evento a al boton de crear producto y ejecuta la función de crear productos
-//             btnCreoProducto.addEventListener("click", () => {
-//                 creoProductos();
-//                 filtraContenidoSeccion();        
-//             })
-           
-//         }      
-//     }
-
-//     inputNombre.addEventListener("blur",(e) => validarInputs("Por favor, completa este campo", e))
-//     inputDescripcion.addEventListener("blur",(e) => validarInputs("Por favor, completa este campo", e))
-//     inputPrecio.addEventListener("blur",(e) => validarInputs("Por favor, completa este campo", e))
-//     asignarOption.addEventListener("blur",(e) => validarInputs("Por favor, elige una sección", e))
-
-// })
-
-
-
 // Funcion que crea el producto
 function creoProductos() {
 
-    //Capturo el valor de los inputs que aparecen cuando toco el boton de "Agregar Producto"
+    //Capturolos inputs que aparecen cuando toco el boton de "Agregar Producto"
     let inputNombre = document.getElementById("inputNombre")
     let inputDescripcion = document.getElementById("inputDescripcion")
     let inputPrecio = document.getElementById("inputPrecio")
     let asignarOption = document.getElementById("inputGroupSelect01")
-    let ingresoImg = document.getElementById("ingresoImg")
 
+    //Guardo en variables el valor de los inputs que aparecen cuando toco el boton de "Agregar Producto"
     let inputNombreValue = inputNombre.value
     let inputDescripcionValue = inputDescripcion.value
     let inputPrecioValue = inputPrecio.value
     let asignarOptionValue = asignarOption.value
 
+    //Genero las validaciones de los inputs
     if (inputNombreValue.trim().length === 0) {
         inputNombre.classList.add("is-invalid")
         inputNombre.nextElementSibling.textContent = "Por favor, completa este campo"
@@ -236,9 +194,9 @@ function creoProductos() {
             inputDescripcion.nextElementSibling.textContent = ""
         })
     }
-    if (inputPrecioValue.trim().length === 0) {
+     if (inputPrecioValue.trim().length === 0) {
         inputPrecio.classList.add("is-invalid")
-        inputPrecio.nextElementSibling.textContent = "Este campo se encuentra vacío o contiene un número negativo"
+        inputPrecio.nextElementSibling.textContent = "Este campo se encuentra vacío"
         inputPrecio.nextElementSibling.classList.add("invalid-feedback")
         
         inputPrecio.addEventListener("click", () => {
@@ -254,15 +212,13 @@ function creoProductos() {
         asignarOption.nextElementSibling.textContent = "Por favor, completa este campo"
         asignarOption.nextElementSibling.classList.add("invalid-feedback")
         asignarOption.addEventListener("click", () => {
-            asignarOption.classList.remove("is-invalid")
-            asignarOption.nextElementSibling.textContent = ""
-        })
-
-        
-        
+         asignarOption.classList.remove("is-invalid")
+         asignarOption.nextElementSibling.textContent = ""
+        })     
     }
     else {
     
+        //Remuevo las clases agregadas en los if
         inputNombre.classList.remove("is-invalid")
         inputNombre.nextElementSibling.textContent = ""
         inputDescripcion.classList.remove("is-invalid")
@@ -272,14 +228,9 @@ function creoProductos() {
         asignarOption.classList.remove("is-invalid")
         asignarOption.nextElementSibling.textContent = ""
         
-
-        //Remuevo las clases agregadas en los if
-
         //Una vez capturado ese valor, genero un nuevo item/producto a traves de mi clase 
         //Lo pusheo a mi array y lo seteo en el localStorage
-  
-
-        let producto = new Menu(inputNombreValue, inputDescripcionValue, inputPrecioValue, asignarOptionValue, ingresoImg)
+        let producto = new Menu(inputNombreValue, inputDescripcionValue, inputPrecioValue, asignarOptionValue)
 
         arrayProductos.push(producto)
         localStorage.setItem("arrayProductosStorage", JSON.stringify(arrayProductos))
@@ -296,10 +247,9 @@ function creoProductos() {
         //Llamo a la función que me permite borrar los productos individualmente
         borrarProductos()  
 
-    }
-
-    
+    }   
 }
+
 
 //Función que genera las cards de los productos
 function generoCard() {
@@ -345,8 +295,19 @@ function generoCard() {
 
         //Deposito las cards generadas en el elemento capturado del html
         depositoProductos.appendChild(divCard)
-    
     })
+    
+    //Genero una notificación de que el producto fue agregado exitosamente
+    Toastify({
+        text: "Producto agregado con éxito",
+        className: "info",
+        gravity: "bottom", 
+        position: "right", 
+        style: {
+          background: "linear-gradient(to right, #019366, #019366)",
+        }
+      }).showToast();
+   
 }
 
 
@@ -375,16 +336,24 @@ function borrarProductos() {
                 text: "",
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#3085d6',
+                confirmButtonColor: '#019366',
                 cancelButtonColor: '#d33',
                 cancelButtonText: 'Cancelar',
                 confirmButtonText: 'Borrar'
               }).then((result) => {
                 if (result.isConfirmed) {
-                  Swal.fire(
-                    '¡Borrado!',
-                    'Borraste este producto.',
-                    )
+
+                //Si el usuario decidió borrar el producto, se mostrara un toastify 
+                Toastify({
+                    text: "Producto eliminado",
+                    className: "info",
+                    gravity: "bottom", 
+                    position: "left",
+                    style: {
+                      background: "linear-gradient(to right, red, red)",
+                    }
+                  }).showToast();
+                  
                     //Hago un filtro del array de los productos para que coincida el nombre del producto con el dataset del boton
                     arrayProductos = arrayProductos.filter((prod) => prod.nombre !== btn.dataset.nombre)
                     //Seteo el array filtrado para poder modificar el localstorage
@@ -394,13 +363,39 @@ function borrarProductos() {
                         borre(e.path[3].id)
                     }
                 }
-              })
+            })
 
-           
-    
         })   
     })
 }
+
+
+//Creo la URL que será llamamada por el metodo Fetch
+const url = "../js/carousel-info.json"
+
+fetch(url)
+.then(res => res.json())
+.then(result => {
+    
+    //Guaro el array de objetos 
+    cosnejos = result.carouserInfo
+
+    //Genero un div por cada elemento recogido del Array
+    cosnejos.forEach((consj) => {
+        let depositoConsejos = document.getElementById("depositoConsejos")
+        let creoDiv = document.createElement("div")
+
+        creoDiv.innerHTML = `<h3>${consj.title}</h3>
+                             <p>${consj.dato}</p>`
+
+
+        depositoConsejos.appendChild(creoDiv)
+        creoDiv.setAttribute("class", "m-2")
+     
+    })
+})
+
+
 
 
 //////////////////////////////////////// Local storage //////////////////////////////////////////// 
@@ -408,6 +403,9 @@ function borrarProductos() {
 document.addEventListener("DOMContentLoaded", () => {
     if (localStorage.getItem("arraySeccionesNoRepeatStorage")) {
 
+        //Cuando se reinica la página, si hay secciones creadas, se elimina el disabled para que el puedan agregar productos
+        let btnAñadirProductos = document.getElementById("btnAñadirProductos")
+        btnAñadirProductos.classList.remove("disabled")
 
         let nombreSeccion = document.getElementById("nombreSeccion")
         nombreSeccion.textContent = "Todos los productos"
@@ -426,10 +424,7 @@ document.addEventListener("DOMContentLoaded", () => {
             let nombreSeccion = document.getElementById("nombreSeccion")
 
             //Variables para seleccionar la seccion al momento de crear el producto
-            let select = document.querySelector(".select")
-            let option = document.createElement("option")
-
-
+   
             li.textContent = section
             li.classList = "secciones btn w-75 centrado p-1 mb-2 mt-2 bg-blanco-letrasv  fs-5  border-color30"
             ulLista.classList = "m-0 p-0  centrado flex-column mt-1"
@@ -437,8 +432,7 @@ document.addEventListener("DOMContentLoaded", () => {
             li.setAttribute("data-categorias", section)
             ulLista.appendChild(li)
 
-            option.textContent = section
-            select.appendChild(option)
+            optionSelected.textContent = section
 
             //Event que cambia de nombre la sección para que el usuario sepa en que seccion esta
             li.addEventListener("click", () => {
@@ -490,12 +484,7 @@ document.addEventListener("DOMContentLoaded", () => {
         //Llamo a estas funciones para que puedan ser usadas en el localStorage tambien
         filtraContenidoSeccion();
         borrarProductos()
-        
-        
-        ///HACER IDEA DE TODOS LOS PRODUCTOS CADA VEZ QUE SE REINICIA LA PAGINA O FIJARSE DE PONER LA PRIMERA SECCION/
-        //AÑADE TUS NOMBRE.SECCION (idea)
-
+    
     }
 
 })
-

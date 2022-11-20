@@ -98,3 +98,7 @@ body {
 .border-img-card {
     border-right: 1px solid rgb(200, 200, 200);
 }
+
+.espaciado {
+    margin-top: 10em;
+}
